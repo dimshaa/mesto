@@ -19,3 +19,13 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__username/profile__username.css);
 @import url(../blocks/profile/__userbio/profile__userbio.css);
+
+@import url(../blocks/cards/cards.css);
+@import url(../blocks/cards/__list/cards__list.css);
+
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__image/card__image.css);
+@import url(../blocks/card/__info/card__info.css);
+@import url(../blocks/card/__caption/card__caption.css);
+@import url(../blocks/card/__like-btn/card__like-btn.css);
+@import url(../blocks/card/__like-btn-background/card__like-btn-background.css);

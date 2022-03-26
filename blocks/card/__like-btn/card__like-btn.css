@@ -1,0 +1,6 @@
+.card__like-btn {
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
