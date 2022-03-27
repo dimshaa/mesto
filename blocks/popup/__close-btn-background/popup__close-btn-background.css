@@ -1,0 +1,6 @@
+.popup__close-btn-background {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  object-position: center;
+}
