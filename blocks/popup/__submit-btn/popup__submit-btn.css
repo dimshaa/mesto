@@ -10,3 +10,10 @@
   line-height: 22px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 630px) {
+  .popup__submit-btn {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
