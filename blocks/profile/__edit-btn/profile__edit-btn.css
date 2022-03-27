@@ -5,6 +5,10 @@
   border: 1px solid #fff;
   width: 24px;
   height: 24px;
+  transition: opacity .4s ease-in;
+}
+.profile__edit-btn:hover {
+  opacity: .7;
 }
 
 @media screen and (max-width: 750px) {

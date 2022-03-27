@@ -9,6 +9,11 @@
   font-size: 18px;
   line-height: 22px;
   font-weight: 400;
+  transition: opacity .4s ease-in;
+}
+
+.popup__submit-btn:hover {
+  opacity: .7;
 }
 
 @media screen and (max-width: 630px) {
