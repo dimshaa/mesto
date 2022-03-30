@@ -1,0 +1,6 @@
+.profile__info-wrapper {
+  display: flex;
+  align-items: baseline;
+  column-gap: 19px;
+  max-width: 550px;
+}
