@@ -2,5 +2,10 @@
   display: flex;
   align-items: baseline;
   column-gap: 19px;
-  max-width: 550px;
+}
+
+@media screen and (max-width: 633px) {
+  .profile__info-wrapper {
+    column-gap: 10px;
+  }
 }

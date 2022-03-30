@@ -9,9 +9,10 @@
   overflow: hidden;
 }
 
-
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 633px) {
   .profile__username {
+    margin-top: 26px;
+    margin-left: 25px;
     font-size: 27px;
     line-height: 33px;
   }

@@ -6,12 +6,9 @@
   padding: 40px 0 0;
 }
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 633px) {
   .profile {
-    grid-template-columns: 282px;
-    gap: 0px;
-    padding: 32px 0 0;
-    justify-content: center;
-    justify-items: center;
+    flex-direction: column;
+    padding-top: 42px;
   }
 }
