@@ -10,19 +10,23 @@ let formInputUsername = editWindow.querySelector('.popup__input_type_username');
 let formInputUserbio = editWindow.querySelector('.popup__input_type_userbio');
 
 
-function toggleEditWindow() {
-  editWindow.classList.toggle('popup_opened');
+function openEditWindow() {
+  editWindow.classList.add('popup_opened');
   formInputUsername.value = profileUsername.textContent;
   formInputUserbio.value = profileUserbio.textContent;
+}
+
+function closeEditWindow() {
+  editWindow.classList.remove('popup_opened');
 }
 
 function formSubmitHandler(event) {
   event.preventDefault();
   profileUsername.textContent = formInputUsername.value;
   profileUserbio.textContent = formInputUserbio.value;
-  editWindow.classList.remove('popup_opened');
+  closeEditWindow();
 }
 
-profileEditBtn.addEventListener('click', toggleEditWindow);
-editWindowCloseBtn.addEventListener('click', toggleEditWindow);
+profileEditBtn.addEventListener('click', openEditWindow);
+editWindowCloseBtn.addEventListener('click', closeEditWindow);
 formElement.addEventListener('submit', formSubmitHandler);
