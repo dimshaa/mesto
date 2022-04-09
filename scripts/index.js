@@ -57,12 +57,17 @@ function renderCard(element) {
    const cardCaption = cardElement.querySelector('.card__caption');
    const cardImage = cardElement.querySelector('.card__image');
    const cardLikeBtn = cardElement.querySelector('.card__like-btn');
+   const cardDeleteBtn = cardElement.querySelector('.card__delete-btn');
 
    cardCaption.textContent = element.name;
    cardImage.setAttribute('src', element.link);
 
    cardLikeBtn.addEventListener('click', function (event) {
      event.target.classList.toggle('card__like-btn_active');
+   })
+
+   cardDeleteBtn.addEventListener('click', function (event) {
+     event.target.closest('.card').remove();
    })
 
    return cardElement;
