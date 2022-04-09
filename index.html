@@ -31,18 +31,27 @@
   <footer class="footer content">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_type_profile-edit">
     <form class="popup__container" name="userProfile">
       <h2 class="popup__header">Редактировать профиль</h2>
-      <input class="popup__input popup__input_type_username" type="text" name="username" placeholder="ваше имя" required>
-      <input class="popup__input popup__input_type_userbio" type="text" name="userbio" placeholder="чем вы занимаетесь" required>
+      <input class="popup__input popup__input_type_username" type="text" name="userName" placeholder="Ваше имя" required>
+      <input class="popup__input popup__input_type_userbio" type="text" name="userBio" placeholder="Чем вы занимаетесь" required>
       <button class="popup__submit-btn" type="submit">Сохранить</button>
+      <button class="popup__close-btn" type="button" aria-label="закрыть не сохраняя"></button>
+    </form>
+  </div>
+  <div class="popup popup_type_card-add">
+    <form class="popup__container" name="addCard">
+      <h2 class="popup__header">Новое место</h2>
+      <input class="popup__input popup__input_type_card-name" type="text" name="cardName" placeholder="Название" required>
+      <input class="popup__input popup__input_type_card-url" type="url" name="cardUrl" placeholder="Ссылка на картинку" required>
+      <button class="popup__submit-btn" type="submit">Создать</button>
       <button class="popup__close-btn" type="button" aria-label="закрыть не сохраняя"></button>
     </form>
   </div>
   <template id="card-template">
     <li class="card">
-      <img class="card__image" src="./images/cards__photo-1.jpg" alt="загруженное фото">
+      <img class="card__image" alt="загруженное фото">
       <div class="card__info">
         <h2 class="card__caption"></h2>
         <button class="card__like-btn" type="button" aria-label="мне нравится"></button>
