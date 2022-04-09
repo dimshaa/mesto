@@ -61,6 +61,10 @@ function renderCard(element) {
    cardCaption.textContent = element.name;
    cardImage.setAttribute('src', element.link);
 
+   cardLikeBtn.addEventListener('click', function (event) {
+     event.target.classList.toggle('card__like-btn_active');
+   })
+
    return cardElement;
 }
 
