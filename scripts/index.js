@@ -1,20 +1,22 @@
 const profile = document.querySelector('.profile');
-const profileEditBtn = profile.querySelector('.profile__edit-btn');
 const profileUsername = profile.querySelector('.profile__username');
 const profileUserbio = profile.querySelector('.profile__userbio');
-
+const profileEditBtn = profile.querySelector('.profile__edit-btn');
 const cardAddBtn = profile.querySelector('.profile__add-btn');
 
 const profileEditWindow = document.querySelector('.popup_type_profile-edit');
-const cardAddWindow = document.querySelector('.popup_type_card-add');
-
-const windowCloseBtns = document.querySelectorAll('.popup__close-btn');
 const formUserElement = profileEditWindow.querySelector('.popup__container');
-const formCardElement = cardAddWindow.querySelector('.popup__container');
 const formInputUsername = profileEditWindow.querySelector('.popup__input_type_username');
 const formInputUserbio = profileEditWindow.querySelector('.popup__input_type_userbio');
+
+const cardAddWindow = document.querySelector('.popup_type_card-add');
+const formCardElement = cardAddWindow.querySelector('.popup__container');
 const formInputCardName = cardAddWindow.querySelector('.popup__input_type_card-name');
 const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-url');
+
+const cardViewWindow = document.querySelector('.popup_type_card-view');
+
+const windowCloseBtns = document.querySelectorAll('.popup__close-btn');
 
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsList = document.querySelector('.cards__list');
@@ -61,6 +63,14 @@ function renderCard(element) {
 
    cardCaption.textContent = element.name;
    cardImage.setAttribute('src', element.link);
+
+   cardImage.addEventListener('click', function (event) {
+     const imageToShow = document.querySelector('.popup__card-image');
+     const captionToShow = document.querySelector('.popup__card-caption');
+     imageToShow.src = cardImage.src;
+     captionToShow.textContent = cardCaption.textContent;
+     openWindow(cardViewWindow);
+   })
 
    cardLikeBtn.addEventListener('click', function (event) {
      event.target.classList.toggle('card__like-btn_active');
@@ -110,8 +120,8 @@ function cardSubmitHandler(event) {
 
 profileEditBtn.addEventListener('click', profileEditHandler);
 cardAddBtn.addEventListener('click', cardAddHandler);
-windowCloseBtns.forEach((btns) => btns.addEventListener('click', closeWindow));
 formUserElement.addEventListener('submit', userSubmitHandler);
 formCardElement.addEventListener('submit', cardSubmitHandler);
+windowCloseBtns.forEach((btns) => btns.addEventListener('click', closeWindow));
 
 setInitialCards();
