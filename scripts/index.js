@@ -15,41 +15,42 @@ const formInputCardName = cardAddWindow.querySelector('.popup__input_type_card-n
 const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-url');
 
 const cardViewWindow = document.querySelector('.popup_type_card-view');
+const imageToShow = document.querySelector('.popup__card-image');
+const captionToShow = document.querySelector('.popup__card-caption');
 
 const windowCloseBtns = document.querySelectorAll('.popup__close-btn');
 
 const cardTemplate = document.querySelector('#card-template').content;
 const cardsList = document.querySelector('.cards__list');
 
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
 function setInitialCards() {
-  const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
   const cardsToAdd = initialCards.map(renderCard);
   cardsList.append(...cardsToAdd);
 }
@@ -62,12 +63,12 @@ function renderCard(element) {
    const cardDeleteBtn = cardElement.querySelector('.card__delete-btn');
 
    cardCaption.textContent = element.name;
-   cardImage.setAttribute('src', element.link);
+   cardImage.src = element.link;
+   cardImage.alt = element.name;
 
    cardImage.addEventListener('click', function (event) {
-     const imageToShow = document.querySelector('.popup__card-image');
-     const captionToShow = document.querySelector('.popup__card-caption');
      imageToShow.src = cardImage.src;
+     imageToShow.alt = cardImage.alt;
      captionToShow.textContent = cardCaption.textContent;
      openWindow(cardViewWindow);
    })
@@ -88,8 +89,7 @@ function openWindow(element) {
 }
 
 function closeWindow(element) {
-  const activeWindow = element.target.closest('.popup_opened');
-  activeWindow.classList.remove('popup_opened');
+  element.classList.remove('popup_opened');
 }
 
 function profileEditHandler() {
@@ -108,20 +108,23 @@ function userSubmitHandler(event) {
   event.preventDefault();
   profileUsername.textContent = formInputUsername.value;
   profileUserbio.textContent = formInputUserbio.value;
-  closeWindow(event);
+  closeWindow(profileEditWindow);
 }
 
 function cardSubmitHandler(event) {
   event.preventDefault();
   const newCard = renderCard({name: formInputCardName.value, link: formInputCardUrl.value});
   cardsList.prepend(newCard);
-  closeWindow(event);
+  closeWindow(cardAddWindow);
 }
 
 profileEditBtn.addEventListener('click', profileEditHandler);
 cardAddBtn.addEventListener('click', cardAddHandler);
 formUserElement.addEventListener('submit', userSubmitHandler);
 formCardElement.addEventListener('submit', cardSubmitHandler);
-windowCloseBtns.forEach((btns) => btns.addEventListener('click', closeWindow));
+windowCloseBtns.forEach(btn => btn.addEventListener('click', function () {
+  const activeWindow = document.querySelector('.popup_opened');
+  closeWindow(activeWindow);
+}));
 
 setInitialCards();
