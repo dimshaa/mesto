@@ -5,12 +5,12 @@ const profileEditBtn = profile.querySelector('.profile__edit-btn');
 const cardAddBtn = profile.querySelector('.profile__add-btn');
 
 const profileEditWindow = document.querySelector('.popup_type_profile-edit');
-const formUserElement = profileEditWindow.querySelector('.popup__container');
+const formUserElement = profileEditWindow.querySelector('.popup__form');
 const formInputUsername = profileEditWindow.querySelector('.popup__input_type_username');
 const formInputUserbio = profileEditWindow.querySelector('.popup__input_type_userbio');
 
 const cardAddWindow = document.querySelector('.popup_type_card-add');
-const formCardElement = cardAddWindow.querySelector('.popup__container');
+const formCardElement = cardAddWindow.querySelector('.popup__form');
 const formInputCardName = cardAddWindow.querySelector('.popup__input_type_card-name');
 const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-url');
 
