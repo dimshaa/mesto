@@ -92,6 +92,7 @@ function openWindow(element) {
 function closeWindow(element) {
   element.classList.remove('popup_opened');
   window.removeEventListener('keydown', handleEscKey);
+  resetInputsError();
 }
 
 function handleEscKey(event) {
@@ -124,6 +125,14 @@ function cardSubmitHandler(event) {
   const newCard = renderCard({name: formInputCardName.value, link: formInputCardUrl.value});
   cardsList.prepend(newCard);
   closeWindow(cardAddWindow);
+}
+
+function resetInputsError() {
+  const errorMessages = document.querySelectorAll('.popup__input-error');
+  const inputs = document.querySelectorAll('.popup__input');
+
+  errorMessages.forEach((msg) => msg.textContent = '');
+  inputs.forEach((input) => input.classList.remove('popup__input_type_error'));
 }
 
 profileEditBtn.addEventListener('click', profileEditHandler);
