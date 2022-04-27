@@ -13,6 +13,7 @@ const cardAddWindow = document.querySelector('.popup_type_card-add');
 const formCardElement = cardAddWindow.querySelector('.popup__form');
 const formInputCardName = cardAddWindow.querySelector('.popup__input_type_card-name');
 const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-url');
+const cardSubmitBtn =  cardAddWindow.querySelector('.popup__submit-btn');
 
 const cardViewWindow = document.querySelector('.popup_type_card-view');
 const imageToShow = document.querySelector('.popup__card-image');
@@ -55,16 +56,16 @@ function setInitialCards() {
   cardsList.append(...cardsToAdd);
 }
 
-function renderCard(element) {
+function renderCard(cardData) {
    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
    const cardCaption = cardElement.querySelector('.card__caption');
    const cardImage = cardElement.querySelector('.card__image');
    const cardLikeBtn = cardElement.querySelector('.card__like-btn');
    const cardDeleteBtn = cardElement.querySelector('.card__delete-btn');
 
-   cardCaption.textContent = element.name;
-   cardImage.src = element.link;
-   cardImage.alt = element.name;
+   cardCaption.textContent = cardData.name;
+   cardImage.src = cardData.link;
+   cardImage.alt = cardData.name;
 
    cardImage.addEventListener('click', function (event) {
      imageToShow.src = cardImage.src;
@@ -109,8 +110,8 @@ function profileEditHandler() {
 }
 
 function cardAddHandler() {
-  formInputCardName.value = '';
-  formInputCardUrl.value = '';
+  formCardElement.reset();
+  deactivateCardSubmit(cardSubmitBtn, formCardElement);
   openWindow(cardAddWindow);
 }
 
@@ -134,6 +135,11 @@ function resetInputsError() {
 
   errorMessages.forEach((msg) => msg.textContent = '');
   inputs.forEach((input) => input.classList.remove('popup__input_type_error'));
+}
+
+function deactivateCardSubmit(submitButtton, formElement) {
+  submitButtton.disabled = !formElement.checkValidity();
+  submitButtton.classList.add('popup__submit-btn_disabled');
 }
 
 profileEditBtn.addEventListener('click', profileEditHandler);
