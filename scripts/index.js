@@ -84,13 +84,13 @@ function renderCard(element) {
    return cardElement;
 }
 
-function openWindow(element) {
-  element.classList.add('popup_opened');
+function openWindow(popupElement) {
+  popupElement.classList.add('popup_opened');
   window.addEventListener('keydown', handleEscKey);
 }
 
-function closeWindow(element) {
-  element.classList.remove('popup_opened');
+function closeWindow(popupElement) {
+  popupElement.classList.remove('popup_opened');
   window.removeEventListener('keydown', handleEscKey);
   resetInputsError();
 }
