@@ -97,7 +97,8 @@ function closeWindow(element) {
 
 function handleEscKey(event) {
   if (event.key === 'Escape') {
-    popupWindows.forEach((popup) => closeWindow(popup));
+    const popupToClose = document.querySelector('.popup_opened');
+    closeWindow(popupToClose);
   }
 }
 
