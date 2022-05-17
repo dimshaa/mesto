@@ -1,4 +1,5 @@
 import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
 
 const profile = document.querySelector('.profile');
 const profileUsername = profile.querySelector('.profile__username');
@@ -15,7 +16,6 @@ const cardAddWindow = document.querySelector('.popup_type_card-add');
 const formCardElement = cardAddWindow.querySelector('.popup__form');
 const formInputCardName = cardAddWindow.querySelector('.popup__input_type_card-name');
 const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-url');
-const cardSubmitBtn =  cardAddWindow.querySelector('.popup__submit-btn');
 
 const popupWindows = document.querySelectorAll('.popup');
 
@@ -48,6 +48,17 @@ const initialCards = [
   }
 ];
 
+const validatorConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-btn',
+  inactiveButtonClass: 'popup__submit-btn_disabled',
+  inputErrorClass: 'popup__input_type_error'
+};
+
+const userFormValidator = new FormValidator(validatorConfig, formUserElement);
+const cardFormValidator = new FormValidator(validatorConfig, formCardElement);
+
 function setCard(card, cardTemplate) {
   const newCard = new Card(card, cardTemplate).renderCard();
   
@@ -68,7 +79,6 @@ export function openWindow(popupElement) {
 function closeWindow(popupElement) {
   popupElement.classList.remove('popup_opened');
   window.removeEventListener('keydown', handleEscKey);
-  resetInputsError();
 }
 
 function handleEscKey(event) {
@@ -81,12 +91,13 @@ function handleEscKey(event) {
 function profileEditHandler() {
   formInputUsername.value = profileUsername.textContent;
   formInputUserbio.value = profileUserbio.textContent;
+  userFormValidator.resetForm();
   openWindow(profileEditWindow);
 }
 
 function cardAddHandler() {
   formCardElement.reset();
-  deactivateCardSubmit(cardSubmitBtn, formCardElement);
+  cardFormValidator.resetForm();
   openWindow(cardAddWindow);
 }
 
@@ -104,19 +115,6 @@ function cardSubmitHandler(event) {
   closeWindow(cardAddWindow);
 }
 
-function resetInputsError() {
-  const errorMessages = document.querySelectorAll('.popup__input-error');
-  const inputs = document.querySelectorAll('.popup__input');
-
-  errorMessages.forEach((msg) => msg.textContent = '');
-  inputs.forEach((input) => input.classList.remove('popup__input_type_error'));
-}
-
-function deactivateCardSubmit(submitButtton, formElement) {
-  submitButtton.disabled = !formElement.checkValidity();
-  submitButtton.classList.add('popup__submit-btn_disabled');
-}
-
 profileEditBtn.addEventListener('click', profileEditHandler);
 cardAddBtn.addEventListener('click', cardAddHandler);
 formUserElement.addEventListener('submit', userSubmitHandler);
@@ -128,5 +126,8 @@ popupWindows.forEach((popup) => {
     }
   });
 });
+
+userFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 setInitialCards(initialCards);
