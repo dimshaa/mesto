@@ -59,7 +59,7 @@ const validatorConfig = {
 const userFormValidator = new FormValidator(validatorConfig, formUserElement);
 const cardFormValidator = new FormValidator(validatorConfig, formCardElement);
 
-function setCard(card, cardTemplate) {
+function createCard(card, cardTemplate) {
   const newCard = new Card(card, cardTemplate).renderCard();
   
   return newCard;
@@ -67,7 +67,7 @@ function setCard(card, cardTemplate) {
 
 function setInitialCards(cards) {
   cards.forEach((card) => {
-    cardsList.append(setCard(card, '#card-template'));
+    cardsList.append(createCard(card, '#card-template'));
   });
 }
 
@@ -88,37 +88,37 @@ function handleEscKey(event) {
   }
 }
 
-function profileEditHandler() {
+function openProfileEditForm() {
   formInputUsername.value = profileUsername.textContent;
   formInputUserbio.value = profileUserbio.textContent;
   userFormValidator.resetValidation();
   openWindow(profileEditWindow);
 }
 
-function cardAddHandler() {
+function openCardAddForm() {
   formCardElement.reset();
   cardFormValidator.resetValidation();
   openWindow(cardAddWindow);
 }
 
-function userSubmitHandler(event) {
+function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileUsername.textContent = formInputUsername.value;
   profileUserbio.textContent = formInputUserbio.value;
   closeWindow(profileEditWindow);
 }
 
-function cardSubmitHandler(event) {
+function handleCardFormSubmit(event) {
   event.preventDefault();
 
-  cardsList.prepend(setCard({name: formInputCardName.value, link: formInputCardUrl.value}, '#card-template'));
+  cardsList.prepend(createCard({name: formInputCardName.value, link: formInputCardUrl.value}, '#card-template'));
   closeWindow(cardAddWindow);
 }
 
-profileEditBtn.addEventListener('click', profileEditHandler);
-cardAddBtn.addEventListener('click', cardAddHandler);
-formUserElement.addEventListener('submit', userSubmitHandler);
-formCardElement.addEventListener('submit', cardSubmitHandler);
+profileEditBtn.addEventListener('click', openProfileEditForm);
+cardAddBtn.addEventListener('click', openCardAddForm);
+formUserElement.addEventListener('submit', handleProfileFormSubmit);
+formCardElement.addEventListener('submit', handleCardFormSubmit);
 popupWindows.forEach((popup) => {
   popup.addEventListener('click', (event) => {
     if (event.target.classList.contains('popup__close-btn') || (event.target === event.currentTarget)) {
