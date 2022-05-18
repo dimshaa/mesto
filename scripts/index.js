@@ -91,13 +91,13 @@ function handleEscKey(event) {
 function profileEditHandler() {
   formInputUsername.value = profileUsername.textContent;
   formInputUserbio.value = profileUserbio.textContent;
-  userFormValidator.resetForm();
+  userFormValidator.resetValidation();
   openWindow(profileEditWindow);
 }
 
 function cardAddHandler() {
   formCardElement.reset();
-  cardFormValidator.resetForm();
+  cardFormValidator.resetValidation();
   openWindow(cardAddWindow);
 }
 
