@@ -1,4 +1,4 @@
-import { openWindow } from './index.js';
+import { openWindow } from '../scripts/index.js';
 
 const cardViewWindow = document.querySelector('.popup_type_card-view');
 const imageToShow = document.querySelector('.popup__card-image');
