@@ -1,5 +1,6 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
 const profile = document.querySelector('.profile');
 const profileUsername = profile.querySelector('.profile__username');
@@ -19,7 +20,7 @@ const formInputCardUrl = cardAddWindow.querySelector('.popup__input_type_card-ur
 
 const popupWindows = document.querySelectorAll('.popup');
 
-const cardsList = document.querySelector('.cards__list');
+
 
 const initialCards = [
   {
@@ -59,17 +60,15 @@ const validatorConfig = {
 const userFormValidator = new FormValidator(validatorConfig, formUserElement);
 const cardFormValidator = new FormValidator(validatorConfig, formCardElement);
 
-function createCard(card, cardTemplate) {
-  const newCard = new Card(card, cardTemplate).renderCard();
-  
-  return newCard;
-}
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const newCard = new Card(item, '#card-template');
+    const newCardElement = newCard.renderCard();
 
-function setInitialCards(cards) {
-  cards.forEach((card) => {
-    cardsList.append(createCard(card, '#card-template'));
-  });
-}
+    cardsList.addItem(newCardElement);
+  }
+}, '.cards__list');
 
 export function openWindow(popupElement) {
   popupElement.classList.add('popup_opened');
@@ -110,8 +109,13 @@ function handleProfileFormSubmit(event) {
 
 function handleCardFormSubmit(event) {
   event.preventDefault();
+  const newCard = new Card({
+    name: formInputCardName.value,
+    link: formInputCardUrl.value
+  }, '#card-template');
+  const newCardElement = newCard.renderCard();
 
-  cardsList.prepend(createCard({name: formInputCardName.value, link: formInputCardUrl.value}, '#card-template'));
+  cardsList.addItem(newCardElement);
   closeWindow(cardAddWindow);
 }
 
@@ -129,5 +133,4 @@ popupWindows.forEach((popup) => {
 
 userFormValidator.enableValidation();
 cardFormValidator.enableValidation();
-
-setInitialCards(initialCards);
+cardsList.renderItems();
