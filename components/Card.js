@@ -1,14 +1,9 @@
-import { openWindow } from '../scripts/index.js';
-
-const cardViewWindow = document.querySelector('.popup_type_card-view');
-const imageToShow = document.querySelector('.popup__card-image');
-const captionToShow = document.querySelector('.popup__card-caption');
-
 export class Card {
-  constructor(cardData, cardTemplate) {
+  constructor(cardData, cardTemplate, handleCardClick) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardTemplate = cardTemplate;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -42,17 +37,9 @@ export class Card {
     this._card.remove();
   }
 
-  _showImage() {
-    imageToShow.src = this._link;
-    imageToShow.alt = this._name;
-    captionToShow.textContent = this._name;
-
-    openWindow(cardViewWindow);   
-  }
-
   _setEventListeners() {
     this._cardImage.addEventListener('click', () => {
-      this._showImage();
+      this._handleCardClick();
     });
     this._cardLikeBtn.addEventListener('click', () => {
       this._likeCard();
