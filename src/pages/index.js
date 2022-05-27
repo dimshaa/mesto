@@ -15,6 +15,20 @@ import {
   validatorConfig
  } from '../scripts/utils/constants.js';
 
+ function createCard(item) {
+  const newCard = new Card(
+    item,
+    '#card-template',
+    () => {
+      cardViewPopup.open({
+        name: item.name,
+        link: item.link
+      });
+    });
+    
+  return newCard.renderCard();
+ }
+
 const userFormValidator = new FormValidator(validatorConfig, profileEditForm);
 const cardFormValidator = new FormValidator(validatorConfig, cardAddForm);
 
@@ -23,16 +37,7 @@ const cardViewPopup = new PopupWithImage('.popup_type_card-view');
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const newCard = new Card(
-      item,
-      '#card-template',
-      () => {
-        cardViewPopup.open({
-          name: item.name,
-          link: item.link
-        });
-      });
-    const newCardElement = newCard.renderCard();
+    const newCardElement = createCard(item);
 
     cardsList.addItem(newCardElement);
   }
@@ -40,19 +45,8 @@ const cardsList = new Section({
 
 const cardAddPopup = new PopupWithForm({
   formSubmitter: (formData) => {
-    const newCard = new Card({
-      name: formData.cardName,
-      link: formData.cardUrl
-    }, 
-    '#card-template',
-    () => {
-      cardViewPopup.open({
-        name: formData.cardName,
-        link: formData.cardUrl
-      });
-    });
-    const newCardElement = newCard.renderCard();
-  
+    const newCardElement = createCard({name: formData.cardName, link: formData.cardUrl});
+
     cardsList.addItem(newCardElement);
     cardAddPopup.close();
   },
