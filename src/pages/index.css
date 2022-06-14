@@ -24,8 +24,10 @@
 @import url(../blocks/card/__image/card__image.css);
 @import url(../blocks/card/__info/card__info.css);
 @import url(../blocks/card/__caption/card__caption.css);
+@import url(../blocks/card/__like-wrapper/card__like-wrapper.css);
 @import url(../blocks/card/__like-btn/card__like-btn.css);
 @import url(../blocks/card/__like-btn/_active/card__like-btn_active.css);
+@import url(../blocks/card/__like-counter/card__like-counter.css);
 @import url(../blocks/card/__delete-btn/card__delete-btn.css);
 
 @import url(../blocks/footer/footer.css);
