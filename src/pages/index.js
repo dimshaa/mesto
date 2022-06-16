@@ -1,5 +1,6 @@
 import './index.css';
 
+import Api from '../scripts/components/Api.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
@@ -11,11 +12,10 @@ import {
   profileEditForm,
   cardAddBtn,
   cardAddForm,
-  initialCards,
   validatorConfig
- } from '../scripts/utils/constants.js';
+} from '../scripts/utils/constants.js';
 
- function createCard(item) {
+function createCard(item) {
   const newCard = new Card(
     item,
     '#card-template',
@@ -25,17 +25,17 @@ import {
         link: item.link
       });
     });
-    
+
   return newCard.renderCard();
- }
+}
 
-const userFormValidator = new FormValidator(validatorConfig, profileEditForm);
-const cardFormValidator = new FormValidator(validatorConfig, cardAddForm);
-
-const cardViewPopup = new PopupWithImage('.popup_type_card-view');
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1',
+  cohortId: 'cohort-43',
+  token: 'c4f0f8b8-a52c-4e71-bc8a-938ca58bb704'
+});
 
 const cardsList = new Section({
-  items: initialCards,
   renderer: (item) => {
     const newCardElement = createCard(item);
 
@@ -43,11 +43,30 @@ const cardsList = new Section({
   }
 }, '.cards__list');
 
+api.getInitialCards()
+  .then((data) => {
+    cardsList.renderItems(data.reverse());
+  })
+  .catch(err => console.log(err));
+
+api.getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo(data)
+  })
+
+const userFormValidator = new FormValidator(validatorConfig, profileEditForm);
+const cardFormValidator = new FormValidator(validatorConfig, cardAddForm);
+
+const cardViewPopup = new PopupWithImage('.popup_type_card-view');
+
 const cardAddPopup = new PopupWithForm({
   formSubmitter: (formData) => {
-    const newCardElement = createCard({name: formData.cardName, link: formData.cardUrl});
+    api.uploadCard({ name: formData.cardName, link: formData.cardUrl })
+      .then((card) => {
+        const newCardElement = createCard(card);
+        cardsList.addItem(newCardElement);
+      })
 
-    cardsList.addItem(newCardElement);
     cardAddPopup.close();
   },
   popupSelector: '.popup_type_card-add'
@@ -55,7 +74,9 @@ const cardAddPopup = new PopupWithForm({
 
 const profileEditPopup = new PopupWithForm({
   formSubmitter: (formData) => {
-    userInfo.setUserInfo(formData.userName, formData.userBio);
+    api.setUserInfo({ name: formData.userName, about: formData.userBio })
+      .then((data) => userInfo.setUserInfo(data))
+      .catch((err) => console.log(err));
     profileEditPopup.close()
   },
   popupSelector: '.popup_type_profile-edit'
@@ -63,7 +84,8 @@ const profileEditPopup = new PopupWithForm({
 
 const userInfo = new UserInfo({
   usernameSelector: '.profile__username',
-  userbioSelector: '.profile__userbio'
+  userbioSelector: '.profile__userbio',
+  avatarSelector: '.profile__avatar',
 })
 
 profileEditBtn.addEventListener('click', () => {
@@ -83,7 +105,6 @@ cardAddBtn.addEventListener('click', () => {
 userFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-cardsList.renderItems();
 
 cardViewPopup.setEventListeners();
 cardAddPopup.setEventListeners();
