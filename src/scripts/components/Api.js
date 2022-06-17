@@ -12,35 +12,11 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/${this._cohortId}/cards`, {
-      headers: {
-        authorization: this._token,
-      },
-    })
-      .then((res) => this._handleResponse(res));
-  }
-
   getUserInfo() {
     return fetch(`${this._baseUrl}/${this._cohortId}/users/me`, {
       headers: {
         authorization: this._token
       }
-    })
-      .then(res => this._handleResponse(res));
-  }
-
-  uploadCard(data) {
-    return fetch(`${this._baseUrl}/${this._cohortId}/cards`, {
-      method: 'POST',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link
-      })
     })
       .then(res => this._handleResponse(res));
   }
@@ -58,6 +34,41 @@ export default class Api {
       })
     })
       .then(res => this._handleResponse(res));
+  }
+
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/${this._cohortId}/cards`, {
+      headers: {
+        authorization: this._token,
+      },
+    })
+      .then((res) => this._handleResponse(res));
+  }
+
+  uploadCard(data) {
+    return fetch(`${this._baseUrl}/${this._cohortId}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
+    })
+      .then(res => this._handleResponse(res));
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/${this._cohortId}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => this._handleResponse(res));
   }
 
 }

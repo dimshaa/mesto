@@ -5,6 +5,7 @@ import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import {
@@ -23,8 +24,13 @@ function createCard(item) {
       cardViewPopup.open({
         name: item.name,
         link: item.link
-      });
-    });
+      })
+    },
+    () => {
+      cardDeletePopup.open(newCard);
+    },
+    userInfo.getUserId(),
+    );
 
   return newCard.renderCard();
 }
@@ -71,6 +77,20 @@ const cardAddPopup = new PopupWithForm({
   },
   popupSelector: '.popup_type_card-add'
 });
+
+const cardDeletePopup = new PopupWithConfirmation({
+  deleteFunction: (card) => {
+    api.deleteCard(card.getCardId())
+      .then(() => {
+        card.deleteCard();
+      })
+
+      cardDeletePopup.close();
+  },
+  popupSelector: '.popup_type_confirm'
+})
+
+cardDeletePopup.setEventListeners();
 
 const profileEditPopup = new PopupWithForm({
   formSubmitter: (formData) => {
