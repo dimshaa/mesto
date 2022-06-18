@@ -4,6 +4,7 @@ export default class PopupWithConfirmation extends Popup {
   constructor({ deleteFunction, popupSelector }) {
     super(popupSelector);
     this._form = this._popup.querySelector('.popup__form');
+    this._submitButton = this._form.querySelector('.popup__submit-btn');
     this._deleteFunction = deleteFunction;
   }
 
@@ -18,5 +19,9 @@ export default class PopupWithConfirmation extends Popup {
       event.preventDefault();
       this._deleteFunction(this._card);
     });
-  }  
+  }
+
+  renderButtonText(text) {
+    this._submitButton.textContent = text;
+  }
 }
