@@ -11,6 +11,8 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import {
   profileEditBtn,
   profileEditForm,
+  avatarEditElement,
+  avatarEditForm,
   cardAddBtn,
   cardAddForm,
   validatorConfig
@@ -67,6 +69,7 @@ api.getUserInfo()
 
 const userFormValidator = new FormValidator(validatorConfig, profileEditForm);
 const cardFormValidator = new FormValidator(validatorConfig, cardAddForm);
+const avatarFormValidator = new FormValidator(validatorConfig, avatarEditForm);
 
 const cardViewPopup = new PopupWithImage('.popup_type_card-view');
 
@@ -107,6 +110,16 @@ const profileEditPopup = new PopupWithForm({
   popupSelector: '.popup_type_profile-edit'
 });
 
+const avatarEditPopup = new PopupWithForm({
+  formSubmitter: (formData) => {
+    api.changeAvatar({ avatar: formData.avatarUrl })
+      .then((data) => userInfo.setUserInfo(data))
+      .catch((err) => console.log(err));
+    avatarEditPopup.close();
+  },
+  popupSelector: '.popup_type_avatar-edit'
+}) 
+
 const userInfo = new UserInfo({
   usernameSelector: '.profile__username',
   userbioSelector: '.profile__userbio',
@@ -122,6 +135,11 @@ profileEditBtn.addEventListener('click', () => {
   profileEditPopup.open();
 });
 
+avatarEditElement.addEventListener('click',() => {
+  avatarFormValidator.resetValidation();
+  avatarEditPopup.open();
+});
+
 cardAddBtn.addEventListener('click', () => {
   cardFormValidator.resetValidation();
   cardAddPopup.open();
@@ -129,8 +147,9 @@ cardAddBtn.addEventListener('click', () => {
 
 userFormValidator.enableValidation();
 cardFormValidator.enableValidation();
-
+avatarFormValidator.enableValidation();
 
 cardViewPopup.setEventListeners();
 cardAddPopup.setEventListeners();
 profileEditPopup.setEventListeners();
+avatarEditPopup.setEventListeners();

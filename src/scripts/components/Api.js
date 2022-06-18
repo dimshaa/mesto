@@ -89,4 +89,18 @@ export default class Api {
     })
       .then(res => this._handleResponse(res));
   }
+
+  changeAvatar(data) {
+    return fetch(`${this._baseUrl}/${this._cohortId}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
+      })
+    })
+      .then(res => this._handleResponse(res));
+  }
 }
