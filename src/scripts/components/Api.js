@@ -68,7 +68,25 @@ export default class Api {
         'Content-Type': 'application/json'
       }
     })
-    .then(res => this._handleResponse(res));
+      .then(res => this._handleResponse(res));
   }
 
+  likeCard(cardId, hasLike) {
+    let method;
+
+    if (hasLike) {
+      method = 'DELETE';
+    } else {
+      method = 'PUT';
+    }
+
+    return fetch(`${this._baseUrl}/${this._cohortId}/cards/${cardId}/likes`, {
+      method: method,
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => this._handleResponse(res));
+  }
 }

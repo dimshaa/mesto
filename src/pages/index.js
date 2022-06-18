@@ -29,11 +29,16 @@ function createCard(item) {
     () => {
       cardDeletePopup.open(newCard);
     },
+    () => {
+      api.likeCard(newCard.getCardId(), newCard.hasLike())
+      .then(res => newCard.showLikes(res.likes))
+    },
     userInfo.getUserId(),
     );
 
   return newCard.renderCard();
 }
+
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1',
