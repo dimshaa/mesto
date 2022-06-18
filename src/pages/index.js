@@ -62,15 +62,10 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar',
 });
 
-api.getInitialCards()
-  .then((data) => {
-    cardsList.renderItems(data.reverse());
-  })
-  .catch(err => console.log(err));
-
-api.getUserInfo()
-  .then((data) => {
-    userInfo.setUserInfo(data)
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData)
+    cardsList.renderItems(cards.reverse());
   })
   .catch(err => console.log(err));
 
