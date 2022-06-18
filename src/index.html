@@ -12,7 +12,9 @@
   </header>
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="" alt="аватар пользователя">
+      <div class="profile__avatar-wrapper">
+        <img class="profile__avatar" src="" alt="аватар пользователя">
+      </div>
       <div class="profile__info">
         <div class="profile__info-wrapper">
           <h1 class="profile__username"></h1>
@@ -93,6 +95,21 @@
     <form class="popup__form" name="confirmDeletion" novalidate>
       <h2 class="popup__header">Вы уверены?</h2>
       <button class="popup__submit-btn" type="submit">Да</button>
+      <button class="popup__close-btn" type="button" aria-label="закрыть не сохраняя"></button>
+    </form>
+  </div>
+  <div class="popup popup_type_avatar-edit">
+    <form class="popup__form" name="editAvatar" novalidate>
+      <h2 class="popup__header">Обновить аватар</h2>
+      <input
+        class="popup__input popup__input_type_avatar-url"
+        type="url"
+        name="avatardUrl"
+        placeholder="Ссылка на картинку"
+        id="card-url-input"
+        required>
+      <span class="popup__input-error" id="card-url-input-error"></span>
+      <button class="popup__submit-btn" type="submit">Сохранить</button>
       <button class="popup__close-btn" type="button" aria-label="закрыть не сохраняя"></button>
     </form>
   </div>
